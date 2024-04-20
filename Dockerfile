@@ -56,9 +56,14 @@ RUN \
 # add local files
 COPY /root /
 
-RUN curl -fsSL https://code-server.dev/install.sh | bash
+RUN apt-get update && apt-get install -y vim git tmux terminator \
+ && curl -fsSL https://code-server.dev/install.sh | bash \
+ && rm -fr /var/lib/apt/lists/*
 RUN mkdir -p /config/.config/code-server \
  && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
+ && echo -e "code-server serve-local --host 0.0.0.0 --port 8000\n" > /config/.config/code-server/start \
+ && chmod +x /config/.config/code-server/start \
+ && ln -s .config/code-server/start /config/code-server \
  && chown -R abc:staff /config/.config/code-server
 
 # ports and volumes
