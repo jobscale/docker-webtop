@@ -1,14 +1,13 @@
-FROM ghcr.io/linuxserver/baseimage-kasmvnc:alpine319
+FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG XFCE_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thelamer"
 
 # title
-ENV TITLE="Alpine XFCE"
+ENV TITLE="Debian KDE"
 
 RUN \
   echo "**** add icon ****" && \
@@ -16,24 +15,42 @@ RUN \
     /kclient/public/icon.png \
     https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/webtop-logo.png && \
   echo "**** install packages ****" && \
-  apk add --no-cache \
-    faenza-icon-theme \
-    faenza-icon-theme-xfce4-appfinder \
-    faenza-icon-theme-xfce4-panel \
-    firefox \
-    mousepad \
-    ristretto \
-    thunar \
-    util-linux-misc \
-    xfce4 \
-    xfce4-terminal && \
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive \
+  apt-get install -y --no-install-recommends \
+    chromium \
+    chromium-l10n \
+    dolphin \
+    gwenview \
+    kde-config-gtk-style \
+    kdialog \
+    kfind \
+    khotkeys \
+    kio-extras \
+    knewstuff-dialog \
+    konsole \
+    ksystemstats \
+    kwin-addons \
+    kwin-x11 \
+    kwrite \
+    plasma-desktop \
+    plasma-workspace \
+    qml-module-qt-labs-platform \
+    systemsettings && \
+  echo "**** application tweaks ****" && \
+  sed -i \
+    's#^Exec=.*#Exec=/usr/local/bin/wrapped-chromium#g' \
+    /usr/share/applications/chromium.desktop && \
+  echo "**** kde tweaks ****" && \
+  sed -i \
+    's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
+    /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
   echo "**** cleanup ****" && \
-  rm -f \
-    /etc/xdg/autostart/xfce4-power-manager.desktop \
-    /etc/xdg/autostart/xscreensaver.desktop \
-    /usr/share/xfce4/panel/plugins/power-manager-plugin.desktop && \
+  apt-get autoclean && \
   rm -rf \
     /config/.cache \
+    /var/lib/apt/lists/* \
+    /var/tmp/* \
     /tmp/*
 
 # add local files
@@ -41,5 +58,4 @@ COPY /root /
 
 # ports and volumes
 EXPOSE 3000
-
 VOLUME /config
