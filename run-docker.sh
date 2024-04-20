@@ -8,11 +8,12 @@ debian-kde() {
   -e CUSTOM_USER=jobscale \
   -p 2999:2999 \
   --shm-size="2gb" \
-  -v /home/webtop/bian-kde:/config \
+  -v /home/webtop/debian-kde:/config \
   ghcr.io/jobscale/docker-webtop
 
   # lscr.io/linuxserver/webtop:debian-kde
 }
 
+docker pull ghcr.io/jobscale/docker-webtop
 docker rm -f webtop-kde
 debian-kde
