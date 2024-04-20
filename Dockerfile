@@ -56,6 +56,11 @@ RUN \
 # add local files
 COPY /root /
 
+RUN curl -fsSL https://code-server.dev/install.sh | bash
+RUN mkdir -p /config/.config/code-server \
+ && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
+ && chown -R abc:staff /config/.config/code-server
+
 # ports and volumes
 EXPOSE 3000
 VOLUME /config
