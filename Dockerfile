@@ -56,7 +56,8 @@ RUN \
 # add local files
 COPY /root /
 
-RUN apt-get update && apt-get install -y vim git tmux terminator \
+RUN apt-get update && apt-get install -y \
+ vim git tmux terminator task-japanese-desktop \
  && curl -fsSL https://code-server.dev/install.sh | bash \
  && rm -fr /var/lib/apt/lists/*
 RUN mkdir -p /config/.config/code-server \
