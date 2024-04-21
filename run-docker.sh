@@ -6,6 +6,8 @@ debian-kde() {
   -e TZ=Asia/Tokyo \
   -e CUSTOM_PORT=2999 \
   -e CUSTOM_USER=jobscale \
+  -e USERNAME=jobscale \
+  -e USER=jobscale \
   -p 2999:2999 \
   --shm-size="2gb" \
   -v /home/webtop/debian-kde:/config \
