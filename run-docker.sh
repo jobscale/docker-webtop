@@ -1,6 +1,7 @@
 debian-kde() {
-  docker run -d \
-  --name=webtop-kde \
+  docker run \
+  --name webtop-kde \
+  --privileged \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Asia/Tokyo \
@@ -12,11 +13,14 @@ debian-kde() {
   -p 2997:8000 \
   --shm-size="2gb" \
   -v /home/webtop/debian-kde:/config \
-  ghcr.io/jobscale/docker-webtop
+  -d ghcr.io/jobscale/docker-webtop
 
   # lscr.io/linuxserver/webtop:debian-kde
 }
 
-docker pull ghcr.io/jobscale/docker-webtop
-docker rm -f webtop-kde
-debian-kde
+{
+  docker pull ghcr.io/jobscale/docker-webtop
+  docker rm -f webtop-kde
+  debian-kde
+  docker logs --since 5m -f webtop-kde
+}
