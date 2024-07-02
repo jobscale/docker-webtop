@@ -35,11 +35,12 @@ RUN \
     plasma-desktop \
     plasma-workspace \
     qml-module-qt-labs-platform \
-    systemsettings && \
+    systemsettings \
+    vim git tmux terminator task-japanese-desktop xdotool && \
   echo "**** application tweaks ****" && \
-  curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
-  apt install -y ./google-chrome-stable_current_amd64.deb \
-  rm google-chrome-stable_current_amd64.deb \
+  curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
+  apt-get install -y ./google-chrome-stable_current_amd64.deb && \
+  rm google-chrome-stable_current_amd64.deb && \
   echo "**** kde tweaks ****" && \
   sed -i \
     's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
@@ -55,9 +56,7 @@ RUN \
 # add local files
 COPY /root /
 
-RUN apt-get update && apt-get install -y \
- vim git tmux terminator task-japanese-desktop xdotool \
- && curl -fsSL https://code-server.dev/install.sh | bash \
+RUN curl -fsSL https://code-server.dev/install.sh | bash \
  && rm -fr /var/lib/apt/lists/*
 RUN mkdir -p /config/.config/code-server \
  && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
