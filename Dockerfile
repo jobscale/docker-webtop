@@ -18,7 +18,8 @@ RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive \
   apt-get install -y --no-install-recommends \
-    wget libu2f-udev fonts-liberation \
+    chromium \
+    chromium-l10n \
     dolphin \
     gwenview \
     kde-config-gtk-style \
@@ -37,9 +38,9 @@ RUN \
     qml-module-qt-labs-platform \
     systemsettings && \
   echo "**** application tweaks ****" && \
-  curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
-  apt install -y ./google-chrome-stable_current_amd64.deb \
-  rm google-chrome-stable_current_amd64.deb \
+  sed -i \
+    's#^Exec=.*#Exec=/usr/local/bin/wrapped-chromium#g' \
+    /usr/share/applications/chromium.desktop && \
   echo "**** kde tweaks ****" && \
   sed -i \
     's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
