@@ -17,9 +17,9 @@ RUN \
   echo "**** install packages ****" && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive \
+  apt-get full-upgrade -y --no-install-recommends && \
+  DEBIAN_FRONTEND=noninteractive \
   apt-get install -y --no-install-recommends \
-    chromium \
-    chromium-l10n \
     dolphin \
     gwenview \
     kde-config-gtk-style \
@@ -37,10 +37,6 @@ RUN \
     plasma-workspace \
     qml-module-qt-labs-platform \
     systemsettings && \
-  echo "**** application tweaks ****" && \
-  sed -i \
-    's#^Exec=.*#Exec=/usr/local/bin/wrapped-chromium#g' \
-    /usr/share/applications/chromium.desktop && \
   echo "**** kde tweaks ****" && \
   sed -i \
     's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
@@ -57,7 +53,6 @@ RUN \
 COPY /root /
 
 SHELL ["bash", "-c"]
-RUN apt-get full-upgrade -y --no-install-recommends
 
 RUN apt-get update && apt-get install -y \
  vim git tmux terminator task-japanese-desktop xdotool \
