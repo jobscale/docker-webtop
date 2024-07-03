@@ -56,22 +56,25 @@ RUN \
 # add local files
 COPY /root /
 
+SHELL /usr/bin/bash
+RUN apt-get full-upgrade -y --no-install-recommends
+
 RUN apt-get update && apt-get install -y \
  vim git tmux terminator task-japanese-desktop xdotool \
  && curl -fsSL https://code-server.dev/install.sh | bash \
- && rm -fr /var/lib/apt/lists/*
-RUN mkdir -p /config/.config/code-server \
+ && rm -fr /var/lib/apt/lists/* \
+ && mkdir -p /config/.config/code-server \
  && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
  && echo -e "code-server serve-local --host 0.0.0.0 --port 8000\n" > /config/.config/code-server/start \
  && chmod +x /config/.config/code-server/start \
  && ln -s .config/code-server/start /config/code-server \
  && chown -R abc:staff /config/.config/code-server
 
-# RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
-# && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
-# && apt-get install -y ./google-chrome-stable_current_amd64.deb \
-# && rm google-chrome-stable_current_amd64.deb \
-# && rm -fr /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
+&& curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
+&& ( apt-get install -y ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
+&& rm google-chrome-stable_current_amd64.deb \
+&& rm -fr /var/lib/apt/lists/*
 
 # ports and volumes
 EXPOSE 3000
