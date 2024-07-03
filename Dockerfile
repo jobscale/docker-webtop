@@ -67,10 +67,11 @@ RUN mkdir -p /config/.config/code-server \
  && ln -s .config/code-server/start /config/code-server \
  && chown -R abc:staff /config/.config/code-server
 
-RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
-&& curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
-&& apt-get install -y ./google-chrome-stable_current_amd64.deb \
-&& rm google-chrome-stable_current_amd64.deb
+# RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
+# && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
+# && apt-get install -y ./google-chrome-stable_current_amd64.deb \
+# && rm google-chrome-stable_current_amd64.deb \
+# && rm -fr /var/lib/apt/lists/*
 
 # ports and volumes
 EXPOSE 3000
