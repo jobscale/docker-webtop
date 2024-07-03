@@ -56,7 +56,7 @@ RUN \
 # add local files
 COPY /root /
 
-SHELL /usr/bin/bash
+SHELL ["bash", "-c"]
 RUN apt-get full-upgrade -y --no-install-recommends
 
 RUN apt-get update && apt-get install -y \
