@@ -11,8 +11,8 @@ debian-kde() {
   -e USER=jobscale \
   -p 2999:2999 \
   -p 2997:8000 \
-  --memory="2gb" \
-  --shm-size="1gb" \
+  --memory 3g \
+  --shm-size 2g \
   -v /home/webtop/debian-kde:/config \
   -d ghcr.io/jobscale/docker-webtop
 
