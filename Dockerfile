@@ -22,6 +22,7 @@ RUN \
   apt-get install -y --no-install-recommends \
     dolphin \
     gwenview \
+    kde-config-gtk-style \
     kdialog \
     kfind \
     khotkeys \
@@ -32,10 +33,14 @@ RUN \
     kwin-addons \
     kwin-x11 \
     kwrite \
-    cinnamon \
-    cinnamon-common \
+    plasma-desktop \
+    plasma-workspace \
     qml-module-qt-labs-platform \
     systemsettings && \
+  echo "**** kde tweaks ****" && \
+  sed -i \
+    's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
+    /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \
