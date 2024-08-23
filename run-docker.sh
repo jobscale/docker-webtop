@@ -2,6 +2,8 @@ debian-kde() {
   docker run \
   --name webtop-kde \
   --privileged \
+  --memory 4g \
+  --shm-size 4g \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Asia/Tokyo \
@@ -11,8 +13,6 @@ debian-kde() {
   -e USER=jobscale \
   -p 2999:2999 \
   -p 2997:8000 \
-  --memory 4g \
-  --shm-size 4g \
   -v /home/webtop/debian-kde:/config \
   -d ghcr.io/jobscale/docker-webtop
 
