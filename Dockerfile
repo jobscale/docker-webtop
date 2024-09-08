@@ -55,7 +55,7 @@ COPY /root /
 SHELL ["bash", "-c"]
 
 RUN apt-get update && apt-get install -y \
- vim git tmux terminator task-japanese-desktop xdotool x11-apps \
+ vim git tmux terminator task-japanese-desktop xdotool x11-apps imagemagick \
  && curl -fsSL https://code-server.dev/install.sh | bash \
  && rm -fr /var/lib/apt/lists/* \
  && mkdir -p /config/.config/code-server \
