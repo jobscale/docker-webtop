@@ -71,7 +71,7 @@ RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
 && rm google-chrome-stable_current_amd64.deb \
 && rm -fr /var/lib/apt/lists/*
 
-RUN mkdir /defaults && chown abc:staff /defaults
+RUN chown abc:staff /defaults
 
 # ports and volumes
 EXPOSE 3000
