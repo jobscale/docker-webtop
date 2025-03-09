@@ -54,24 +54,29 @@ COPY /root /
 
 SHELL ["bash", "-c"]
 
-RUN apt-get update && apt-get install -y \
+# IDE
+RUN apt-get update && apt-get install -y --no-install-recommends \
  vim git tmux terminator task-japanese-desktop xdotool x11-apps imagemagick ffmpeg \
  && curl -fsSL https://code-server.dev/install.sh | bash \
- && rm -fr /var/lib/apt/lists/* \
  && mkdir -p /config/.config/code-server \
  && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
  && echo -e "code-server serve-local --host 0.0.0.0 --port 8000\n" > /config/.config/code-server/start \
  && chmod +x /config/.config/code-server/start \
  && ln -s .config/code-server/start /config/code-server \
- && chown -R abc:staff /config/.config/code-server
+ && chown -R abc:staff /config/.config/code-server \
+ && apt-get clean && rm -fr /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y wget fonts-liberation libu2f-udev \
+# Goosle-Chrome
+RUN apt-get update && apt-get install -y --no-install-recommends \
+ wget fonts-liberation libu2f-udev \
 && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
 && ( apt-get install -y ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
 && rm google-chrome-stable_current_amd64.deb \
-&& rm -fr /var/lib/apt/lists/*
+&& apt-get clean && rm -fr /var/lib/apt/lists/*
 
-RUN chown abc:staff /defaults
+# Permissions
+RUN chown -R abc:staff /defaults \
+ && chown -R abc:staff /config
 
 # ports and volumes
 EXPOSE 3000

@@ -5,7 +5,7 @@ debian-kde() {
   --memory 4g \
   --shm-size 4g \
   -e PUID=1000 \
-  -e PGID=1000 \
+  -e PGID=50 \
   -e TZ=Asia/Tokyo \
   -e CUSTOM_PORT=2999 \
   -e CUSTOM_USER=jobscale \
