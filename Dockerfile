@@ -69,14 +69,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Google-Chrome
 RUN apt-get update && apt-get install -y --no-install-recommends \
  wget libu2f-udev \
-&& curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
-&& ( apt-get install -y ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
-&& rm google-chrome-stable_current_amd64.deb \
-&& apt-get clean && rm -fr /var/lib/apt/lists/*
+ && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
+ && ( apt-get install -y ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
+ && rm google-chrome-stable_current_amd64.deb \
+ && apt-get clean && rm -fr /var/lib/apt/lists/*
 
 # Fonts
 RUN apt-get update && apt-get install -y --no-install-recommends \
- fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao
+ fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao \
+ && update-locale LANG=ja_JP.UTF-8 \
+ && apt-get clean && rm -fr /var/lib/apt/lists/*
 
 # Permissions
 RUN chown -R abc:staff /defaults
