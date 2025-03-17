@@ -66,7 +66,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && chown -R abc:staff /config/.config/code-server \
  && apt-get clean && rm -fr /var/lib/apt/lists/*
 
-# Google-Chrome
+# Google Chrome
 RUN apt-get update && apt-get install -y --no-install-recommends \
  wget libu2f-udev \
  && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
@@ -74,7 +74,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm google-chrome-stable_current_amd64.deb \
  && apt-get clean && rm -fr /var/lib/apt/lists/*
 
-# Fonts
+# Fonts and Language
 RUN apt-get update && apt-get install -y --no-install-recommends \
  fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao \
  && update-locale LANG=ja_JP.UTF-8 \
