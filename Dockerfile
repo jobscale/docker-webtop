@@ -42,7 +42,7 @@ RUN \
     's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
     /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
   echo "**** cleanup ****" && \
-  apt-get autoclean && \
+  apt-get clean && \
   rm -rf \
     /config/.cache \
     /var/lib/apt/lists/* \
