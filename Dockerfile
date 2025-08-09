@@ -54,7 +54,7 @@ COPY /root /
 SHELL ["bash", "-c"]
 
 # IDE
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
  vim git tmux terminator task-japanese-desktop xdotool x11-apps imagemagick ffmpeg \
  && curl -fsSL https://code-server.dev/install.sh | bash \
@@ -67,7 +67,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && apt-get clean && rm -fr /var/lib/apt/lists/*
 
 # Google Chrome
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
  wget libu2f-udev \
  && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
@@ -76,7 +76,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && apt-get clean && rm -fr /var/lib/apt/lists/*
 
 # Fonts and Language
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
  fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao \
  && update-locale LANG=ja_JP.UTF-8 \
