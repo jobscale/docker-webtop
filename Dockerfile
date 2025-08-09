@@ -42,10 +42,9 @@ RUN \
     's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
     /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
   echo "**** cleanup ****" && \
-  apt-get clean && \
-  rm -rf \
+    apt-get clean && rm -fr /var/lib/apt/lists/* \
+ && rm -rf \
     /config/.cache \
-    /var/lib/apt/lists/* \
     /var/tmp/* \
     /tmp/*
 
@@ -72,7 +71,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
  wget libu2f-udev \
  && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
- && ( apt-get install -y ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
+ && ( apt-get install -y --no-install-recommends ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
  && rm google-chrome-stable_current_amd64.deb \
  && apt-get clean && rm -fr /var/lib/apt/lists/*
 
