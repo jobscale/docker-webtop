@@ -33,9 +33,6 @@ jobs:
           - name: regular
             irregular: ''
             docker_file: Dockerfile
-          - name: cinnamon
-            irregular: 'cinnamon'
-            docker_file: cinnamon/Dockerfile
 
     permissions:
       contents: read
