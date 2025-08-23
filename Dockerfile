@@ -20,6 +20,7 @@ RUN \
   apt-get full-upgrade -y --no-install-recommends && \
   DEBIAN_FRONTEND=noninteractive \
   apt-get install -y --no-install-recommends \
+    ca-certificates \
     dolphin \
     gwenview \
     kde-config-gtk-style \
@@ -49,7 +50,7 @@ RUN \
     /tmp/*
 
 # add local files
-COPY /root /
+COPY root/defaults /defaults
 
 SHELL ["bash", "-c"]
 
