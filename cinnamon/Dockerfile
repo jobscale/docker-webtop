@@ -20,15 +20,13 @@ RUN \
   apt-get full-upgrade -y --no-install-recommends && \
   DEBIAN_FRONTEND=noninteractive \
   apt-get install -y --no-install-recommends \
+    ca-certificates \
     cinnamon \
  && apt-get clean && rm -fr /var/lib/apt/lists/* \
  && rm -rf \
     /config/.cache \
     /var/tmp/* \
     /tmp/*
-
-# add local files
-COPY /root /
 
 SHELL ["bash", "-c"]
 
