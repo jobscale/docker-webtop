@@ -57,25 +57,23 @@ EXPOSE 3000
 VOLUME /config
 
 # Japanese Fonts and Language
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y locales task-japanese-desktop \
- fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao \
- && locale-gen ja_JP.UTF-8 \
- && update-locale LANG=ja_JP.UTF-8 \
- && apt-get clean && rm -fr /var/lib/apt/lists/*
-
-# Google Chrome - remove Chromium
+# Install Google Chrome and Visual Code CodeServer
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
+ locales fonts-liberation fonts-noto-cjk fonts-ipafont fonts-takao \
+ && locale-gen ja_JP.UTF-8 \
+ && update-locale LANG=ja_JP.UTF-8 \
+ && echo "Google Chrome"
+ && apt-get install -y --no-install-recommends \
  ca-certificates curl wget libu2f-udev \
  && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
  && ( apt-get install -y --no-install-recommends ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
  && rm google-chrome-stable_current_amd64.deb \
- && apt-get clean && rm -fr /var/lib/apt/lists/*
-
-# IDE
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends \
+ && sed -i \
+    's#^Exec=.*#Exec=/usr/local/bin/wrapped-google-chrome-stable#g' \
+    /usr/share/applications/*hrome.desktop \
+ && echo 'IDE'
+ && apt-get install -y --no-install-recommends \
  vim git tmux terminator xdotool x11-apps imagemagick ffmpeg \
  && curl -fsSL https://code-server.dev/install.sh | bash \
  && mkdir -p /config/.config/code-server \
@@ -84,4 +82,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && chmod +x /config/.config/code-server/start \
  && ln -s .config/code-server/start /config/code-server \
  && chown -R abc:staff /config/.config/code-server \
- && apt-get clean && rm -fr /var/lib/apt/lists/*
+ && apt-get autoremove -y && apt-get clean && rm -fr /var/lib/apt/lists/*
