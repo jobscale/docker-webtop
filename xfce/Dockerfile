@@ -67,7 +67,7 @@ RUN apt-get update && apt-get install -y locales task-japanese-desktop \
 # Google Chrome - remove Chromium
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
- wget libu2f-udev \
+ ca-certificates curl wget libu2f-udev \
  && curl -sLO "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" \
  && ( apt-get install -y --no-install-recommends ./google-chrome-stable_current_amd64.deb || echo "Code: $?" ) \
  && rm google-chrome-stable_current_amd64.deb \
