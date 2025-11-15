@@ -74,12 +74,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     /usr/share/applications/*hrome.desktop \
  && echo 'IDE' \
  && apt-get install -y --no-install-recommends \
- vim git tmux terminator xdotool x11-apps imagemagick ffmpeg \
+ vim git tmux xdotool x11-apps imagemagick ffmpeg \
  && curl -fsSL https://code-server.dev/install.sh | bash \
  && mkdir -p /config/.config/code-server \
  && echo -e "bind-addr: 0.0.0.0:8000\nauth: none\npassword: false\ncert: false\n" > /config/.config/code-server/config.yaml \
  && echo -e "code-server serve-local --host 0.0.0.0 --port 8000\n" > /config/.config/code-server/start \
  && chmod +x /config/.config/code-server/start \
- && ln -s .config/code-server/start /config/code-server \
+ && ln -sfn .config/code-server/start /config/code-server \
  && chown -R abc:staff /config/.config/code-server \
- && apt-get autoremove -y && apt-get clean && rm -fr /var/lib/apt/lists/*
+ && apt-get auto-remove -y && apt-get clean && rm -fr /var/lib/apt/lists/*
